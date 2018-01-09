@@ -10,9 +10,11 @@ from sklearn.feature_extraction import text
 
 class explor:
     data_arr = 4
+    stop_wrods = None
 
-    def __init__(self, arr):
+    def __init__(self, arr, stop):
         self.data_arr = arr
+        self.stop_wrods = stop
 
     def print_total(self):
         print("There are " + str(len(self.data_arr)) + " of twiites in are corupus")
@@ -25,26 +27,14 @@ class explor:
                 count += 1
         print "There are " + str(count) + " of the gender " + gen + " in are data"
 
-    def adder(self, arr, arradd):
-        for tt in arradd:
-            arr.append(tt)
-        return arr
-
     def print_language_length(self, gen):
-#        arr = ([])
         ss = " "
-        aa = text.ENGLISH_STOP_WORDS
-        aaa = ([])
-        for tt in aa:
-            aaa.append(tt)
-        aaa = self.adder(aaa, ['world', 'really', 'way', 'going', 'll', 'best', 've', 'new', 'http', 'https', 'time', 'just', 'don', 'like', 'love', 'day', '__', 'know', 'people','think','got','good','make','want','need','amp'])
         for item in self.data_arr:
             tmp = self.data_arr[item]
             if ("target" in tmp) and (tmp["target"] == gen) and ("text" in tmp):
-#                arr.append(tmp["text"])
                 ss = ss + tmp["text"]
-        arr = [ss];
-        vectorizer = CountVectorizer(stop_words=aaa)
+        arr = [ss]
+        vectorizer = CountVectorizer(stop_words=self.stop_wrods)
         X = vectorizer.fit_transform(arr)
         ans_arr = vectorizer.get_feature_names()
         print "In gender " + gen + " there are " + str(len(ans_arr)) + " wrods"
