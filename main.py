@@ -3,6 +3,7 @@ import explor as ex
 import services as ser
 import tfidfmodel as tf
 import models as mod
+import knn as kk
 cc = cs.csvclass()
 ser = ser.services()
 stop_wrods = ser.get_stop_wrods()
@@ -18,4 +19,7 @@ tf_buid = tf.tfidfmodel(ans, stop_wrods)
 top = tf_buid.extractTf()
 run_mod = mod.models(top[0], top[1], top[2], top[3], top[4])
 run_mod.start()
+#kkk = kk.knn(ans);
+#kkk.runKNN()
+
 #fdd

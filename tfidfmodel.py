@@ -62,7 +62,7 @@ class tfidfmodel:
         t0 = time()
         top1 = (1, 2)
         print("Extracting features from the training data using a sparse vectorizer")
-        vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=top1)
+        vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=top1,max_df=0.6)
         train_idf = vectorizer.fit_transform(self.train['data'])
         print("n_samples: %d, n_features: %d" % train_idf.shape)
         print()
