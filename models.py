@@ -51,11 +51,14 @@ class models:
         clf_descr = str(clf).split('(')[0]
         return clf_descr, score, train_time, test_time
 
+#    (SGDClassifier(loss="hinge", alpha=0.00005, fit_intercept=False), "SVM")
+#    (Perceptron(class_weight="balanced",), "Perceptron")
+#
     def start(self):
         results = []
-        for clf, name in (
-            (SGDClassifier(loss="modified_huber"), "SVM"), (Perceptron(class_weight="balanced"), "Perceptron"),
-            (MultinomialNB(alpha=0.001), "Naive Bayes")):
+        for clf, name in ((MultinomialNB(alpha=0.005), "Naive Bayes"),
+                          (SGDClassifier(loss="hinge", alpha=0.00005, fit_intercept=False), "SVM"),
+                          (Perceptron(class_weight="balanced", ), "Perceptron")):
             print('=' * 80)
             print(name)
             results.append(self.benchmark(clf))
