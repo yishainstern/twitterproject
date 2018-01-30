@@ -55,14 +55,36 @@ class tfidfmodel:
             self.ad_to_diction(tmp, diction)
             count += 1
 
+    def twit_build(self, source):
+        in_diction = {}
+        in_diction['target_names'] = ['male', 'female']
+        in_diction['data'] = ([])
+        in_diction['target'] = ([])
+        for item in source:
+            tmp = source[item];
+            self.ad_to_diction(tmp, in_diction)
+        return in_diction;
+
+    def extracttwitttf(self, source):
+        names = source['target_names']
+        top1 = (1, 2)
+        vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=top1, max_df=0.6)
+        train_idf = vectorizer.fit_transform(self.train['data'])
+        test_idf = vectorizer.transform(source['data'])
+        print("for file that we passed n_samples: %d, n_features: %d" % test_idf.shape)
+        return names, test_idf
+
+
     def extractTf(self):
         target_names = self.test['target_names']
         # split a training set and a test set
         train_target, test_target = self.train['target'], self.test['target']
         t0 = time()
-        top1 = (1, 2)
+
         print("Extracting features from the training data using a sparse vectorizer")
+        top1 = (1, 2)
         vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=top1,max_df=0.6)
+
         train_idf = vectorizer.fit_transform(self.train['data'])
         print("n_samples: %d, n_features: %d" % train_idf.shape)
         print()

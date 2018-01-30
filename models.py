@@ -9,6 +9,7 @@ from time import time
 import matplotlib.pyplot as plt
 from sklearn.utils.extmath import density
 from sklearn import metrics
+import math
 class models:
     names = None
     train_target = None
@@ -26,7 +27,6 @@ class models:
         self.test_target = tar_test
         self.train_feachers = vec_train
         self.test_feachers = vec_test
-
 
     # #############################################################################
     # Benchmark classifiers
@@ -54,6 +54,32 @@ class models:
 #    (SGDClassifier(loss="hinge", alpha=0.00005, fit_intercept=False), "SVM")
 #    (Perceptron(class_weight="balanced",), "Perceptron")
 #
+    def benchmark_twiit(self, clf, feacher, ff):
+        clf.fit(self.train_feachers, self.train_target)
+        pred = clf.predict(feacher)
+        allnum = len(pred)
+        count0 = 0
+        count1 = 0
+        for item in pred:
+            if item == "male":
+                count0 += 1
+            elif item == "female":
+                count1 += 1
+        pre = int(math.floor(100 * (float(count0) / float(allnum))))
+
+        print()
+        print("there are " + str(count0) + " man which are " + str(pre) + "%")
+        pre = int(math.floor(100 * (float(count1) / float(allnum))))
+        print("there are " + str(count1) + " woman which are " + str(pre) + "%")
+
+    def run_twiit_file(self, arr, filel):
+        print("for file: " + filel)
+        for clf, name in ((MultinomialNB(alpha=0.005), "Naive Bayes"),
+                          (SGDClassifier(loss="hinge", alpha=0.00005, fit_intercept=False), "SVM"),
+                          (Perceptron(class_weight="balanced", ), "Perceptron")):
+            print("when running " + name + " we get: ")
+            self.benchmark_twiit(clf, arr, filel)
+
     def start(self):
         results = []
         for clf, name in ((MultinomialNB(alpha=0.005), "Naive Bayes"),

@@ -38,3 +38,21 @@ class csvclass:
     def __init__(self):
         self.colorcon = colovert.convertcolor()
         self.i = 12
+
+    def twitt_build(self, file_name):
+        train_data = {}
+        input_file = csv.reader(open(file_name))
+        print (input_file.next())
+        count = 0
+        for row in input_file:
+            count += 1
+            tmp = {}
+            tmp_txt = unicode(row[10], errors='ignore')
+            tmp['text'] = tmp_txt
+            tmp['color1'] = row[9]
+            tmp['target'] = 'male'
+            tmp['color11'] = self.colorcon.rgb(tmp['color1'])
+            tmp['color2'] = row[5]
+            tmp['color21'] = self.colorcon.rgb(tmp['color2'])
+            train_data[row[0]] = tmp
+        return train_data

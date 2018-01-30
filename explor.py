@@ -41,5 +41,6 @@ class explor:
         d = pd.Series(X.toarray().flatten(), index=ans_arr).sort_values(ascending=False)
 #        ax = d[:10].plot(kind='bar', figsize=(10,6), width=.8, fontsize=14, rot=45, title='Barack Obama Wikipedia Article Word Counts')
 #        ax.title.set_size(18)
+        print("ten most common words")
         print d[:10]
 
