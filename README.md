@@ -1,2 +1,2 @@
 # twitterproject
-a project for scholl
+a project for school
